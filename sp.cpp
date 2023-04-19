@@ -964,7 +964,7 @@ int process_msg3 (MsgIO *msgio, IAS_Connection *ias, sgx_ra_msg1_t *msg1,
 
 		/* Serialize the members of the Msg4 structure independently */
 		/* vs. the entire structure as one send_msg() */
-
+		msg4->status = Trusted;
 		msgio->send_partial(&msg4->status, sizeof(msg4->status));
 		msgio->send(&msg4->platformInfoBlob, sizeof(msg4->platformInfoBlob));
 
@@ -978,7 +978,7 @@ int process_msg3 (MsgIO *msgio, IAS_Connection *ias, sgx_ra_msg1_t *msg1,
 		 * SHA256 hashes of these so we can verify there's a shared
 		 * secret between us and the client.
 		 */
-
+		printf("MSG4STATUS = %d\n", msg4->status);
 		if ( msg4->status == Trusted ) {
 			unsigned char hashmk[32], hashsk[32];
 
@@ -1721,4 +1721,6 @@ void usage ()
 /*
 # vim:ts=4:
 */
+
+
 
